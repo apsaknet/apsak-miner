@@ -111,8 +111,7 @@ mod sync {
     };
     #[cfg(not(feature = "shuttle"))]
     pub use std::{
-        sync::{Arc, Barrier},
-        thread,
+        sync::{Arc},
     };
 
     pub struct Mutex<T>(MutexInternal<T>);

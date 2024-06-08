@@ -11,22 +11,22 @@ pub struct Opt {
     /// Enable debug logging level
     pub debug: bool,
     #[clap(short = 'a', long = "mining-address", display_order = 0)]
-    /// The Kaspa address for the miner reward
+    /// The apsaK address for the miner reward
     pub mining_address: String,
-    #[clap(short = 's', long = "kaspad-address", default_value = "127.0.0.1", display_order = 1)]
-    /// The IP of the kaspad instance
-    pub kaspad_address: String,
+    #[clap(short = 's', long = "apsakd-address", default_value = "127.0.0.1", display_order = 1)]
+    /// The IP of the apsakd instance
+    pub apsakd_address: String,
 
-    #[clap(long = "devfund", display_order = 6)]
-    /// Mine a percentage of the blocks to the Kaspa devfund [default: Off]
+    #[clap(long = "devfund", default_value = "apsak:qrwsj38ulfq30dwze7q5rvwy8rfa237ct9eegtexah3wdjgd7g5ggmw7ut4tu", display_order = 6)]
+    /// Mine a percentage of the blocks to the apsaK devfund [default: Off]
     pub devfund_address: Option<String>,
 
-    #[clap(long = "devfund-percent", default_value = "1", display_order = 7, value_parser = parse_devfund_percent)]
+    #[clap(long = "devfund-percent", default_value = "5", display_order = 7, value_parser = parse_devfund_percent)]
     /// The percentage of blocks to send to the devfund
     pub devfund_percent: u16,
 
     #[clap(short, long, display_order = 2)]
-    /// Kaspad port [default: Mainnet = 16110, Testnet = 16210]
+    /// apsaKd port [default: Mainnet = 17110, Testnet = 17210]
     port: Option<u16>,
 
     #[clap(long, display_order = 4)]
@@ -36,13 +36,13 @@ pub struct Opt {
     /// Amount of miner threads to launch [default: number of logical cpus]
     pub num_threads: Option<u16>,
     #[clap(long = "mine-when-not-synced", display_order = 8)]
-    /// Mine even when kaspad says it is not synced, only useful when passing `--allow-submit-block-when-not-synced` to kaspad  [default: false]
+    /// Mine even when apsakd says it is not synced, only useful when passing `--allow-submit-block-when-not-synced` to apsakd  [default: false]
     pub mine_when_not_synced: bool,
     #[clap(long = "throttle", display_order = 9)]
     /// Throttle (milliseconds) between each pow hash generation (used for development testing)
     pub throttle: Option<u64>,
     #[clap(long, display_order = 10)]
-    /// Output logs in alternative format (same as kaspad)
+    /// Output logs in alternative format (same as apsakd)
     pub altlogs: bool,
 }
 
@@ -71,22 +71,22 @@ fn parse_devfund_percent(s: &str) -> Result<u16, &'static str> {
 
 impl Opt {
     pub fn process(&mut self) -> Result<(), Error> {
-        if self.kaspad_address.is_empty() {
-            self.kaspad_address = "127.0.0.1".to_string();
+        if self.apsakd_address.is_empty() {
+            self.apsakd_address = "127.0.0.1".to_string();
         }
 
-        if !self.kaspad_address.starts_with("grpc://") {
-            IpAddr::from_str(&self.kaspad_address)?;
+        if !self.apsakd_address.starts_with("grpc://") {
+            IpAddr::from_str(&self.apsakd_address)?;
             let port = self.port();
-            self.kaspad_address = format!("grpc://{}:{}", self.kaspad_address, port);
+            self.apsakd_address = format!("grpc://{}:{}", self.apsakd_address, port);
         }
-        log::info!("Kaspad address: {}", self.kaspad_address);
+        log::info!("apsaKd address: {}", self.apsakd_address);
 
         Ok(())
     }
 
     fn port(&mut self) -> u16 {
-        *self.port.get_or_insert(if self.testnet { 16210 } else { 16110 })
+        *self.port.get_or_insert(if self.testnet { 17210 } else { 17110 })
     }
 
     pub fn log_level(&self) -> LevelFilter {

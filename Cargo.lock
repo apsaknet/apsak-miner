@@ -96,6 +96,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "080e9890a082662b09c1ad45f567faeeb47f22b5fb23895fbe1e651e718e25ca"
 
 [[package]]
+name = "apsak-miner"
+version = "0.2.5"
+dependencies = [
+ "arc-swap",
+ "blake2b_simd",
+ "cc",
+ "chrono",
+ "clap",
+ "env_logger",
+ "keccak",
+ "log",
+ "num_cpus",
+ "parking_lot",
+ "prost",
+ "rand",
+ "sha3",
+ "shuttle",
+ "tokio",
+ "tokio-stream",
+ "tonic",
+ "tonic-build",
+]
+
+[[package]]
 name = "arc-swap"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -744,30 +768,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cee9c64da59eae3b50095c18d3e74f8b73c0b86d2792824ff01bbce68ba229ca"
 dependencies = [
  "wasm-bindgen",
-]
-
-[[package]]
-name = "kaspa-miner"
-version = "0.2.5"
-dependencies = [
- "arc-swap",
- "blake2b_simd",
- "cc",
- "chrono",
- "clap",
- "env_logger",
- "keccak",
- "log",
- "num_cpus",
- "parking_lot",
- "prost",
- "rand",
- "sha3",
- "shuttle",
- "tokio",
- "tokio-stream",
- "tonic",
- "tonic-build",
 ]
 
 [[package]]

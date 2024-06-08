@@ -14,12 +14,12 @@ use std::{
 };
 
 use crate::{
-    cli::Opt, client::KaspadHandler, miner::MinerManager, proto::NotifyNewBlockTemplateRequestMessage, target::Uint256,
+    cli::Opt, client::ApsakdHandler, miner::MinerManager, proto::NotifyNewBlockTemplateRequestMessage, target::Uint256,
 };
 
 mod cli;
 mod client;
-mod kaspad_messages;
+mod apsakd_messages;
 mod miner;
 mod pow;
 mod swap_rust;
@@ -78,7 +78,7 @@ async fn main() -> Result<(), Error> {
 
     while !shutdown.is_shutdown() {
         let mut client =
-            KaspadHandler::connect(opt.kaspad_address.clone(), opt.mining_address.clone(), opt.mine_when_not_synced)
+            ApsakdHandler::connect(opt.apsakd_address.clone(), opt.mining_address.clone(), opt.mine_when_not_synced)
                 .await?;
         if let Some(devfund_address) = &opt.devfund_address {
             client.add_devfund(devfund_address.clone(), opt.devfund_percent);
@@ -95,7 +95,7 @@ async fn main() -> Result<(), Error> {
         let mut miner_manager =
             MinerManager::new(client.send_channel.clone(), opt.num_threads, throttle, shutdown.clone());
         client.listen(&mut miner_manager, shutdown.clone()).await?;
-        warn!("Disconnected from kaspad, retrying");
+        warn!("Disconnected from apsakd, retrying");
     }
     Ok(())
 }
